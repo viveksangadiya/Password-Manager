@@ -1,0 +1,64 @@
+<div class="container mx-auto my-16">
+    <h1 class="text-5xl mt-0 mb-5">Safe Password Manager</h1>
+    <p class="mb-5">Keep your passwords and documents in a secure private vault - and access them with one click from all your device</p>
+    <button class="mb-5 mx-0.5 px-5 py-3 bg-gray-900 text-white  shadow rounded-md">
+    Add New Site
+    </button>
+
+    <!-- Add New site form -->
+
+    <div class="px-20 py-10 mb-10 my-5 border-4 border-gray-900">
+        <h2 class="text-3xl text-center">Add New Site</h2>
+        <p class="text-center">You can add new site from below</p>
+        <form #data="ngForm" (ngSubmit)="onSubmit(data.value)">
+            <div class="flex flex-col">
+                <label class="text-lg font-medium mb-2">Site name</label>
+                <input type="text" ngModel name="siteName" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-lg font-medium mb-2">Site URL</label>
+                <input type="text" ngModel name="siteURL" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+            </div>
+
+            <div class="flex flex-col">
+                <label class="text-lg font-medium mb-2">Site Image Url</label>
+                <input type="text" ngModel name="siteImgURL" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+            </div>
+
+            <button type="submit" class="mt-10 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-md">
+                Add New Site
+            </button>
+
+            <button type="reset" class="mt-10 mx-0.5 px-5 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md">
+               Cancle
+            </button>
+        </form>
+
+
+    </div>
+
+    <div class="grid grid-cols-4 gap-5" *ngFor="let psw of password">
+
+        <div class="shadow-lg border-2 border-gray-900">
+            <img src="{{psw.siteImgURL}}" alt="">
+            <h3 class="p-3 text-xl font-bold">{{psw.siteName}}</h3>
+            <div class="w-60 m-3 p-3  bg-blue-200 text-blue-800 rounded-lg text-sm">
+                {{psw.siteURL}}
+            </div>
+
+            <button class=" my-3 my-3 text-white bg-gray-900 rounded-lg text-sm px-5 py-3">
+                Add New Password
+            </button>
+
+            <button class="my-3 mx-0.5  px-5 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md">
+                Edit
+             </button>
+
+            <button class="my-3 mx-0.5  px-5 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md" (click)="onDeletePassword(psw._id)">
+               Delete
+             </button>
+        </div>
+
+    </div>
+</div>
