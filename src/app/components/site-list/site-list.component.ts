@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Observable } from 'rxjs';
-import { Password } from 'src/app/model/pasword';
+import { Password } from 'src/app/model/password';
 import { PasswordService } from 'src/app/services/password.service';
 
 @Component({
@@ -12,6 +14,12 @@ import { PasswordService } from 'src/app/services/password.service';
 export class SiteListComponent{
 
   password:Password[]=[];
+  
+  @Input()
+  isEditMode:boolean=false;
+  @ViewChild('data', {static: false}) data: NgForm | undefined;
+  passwordId : string =''
+  show:boolean=false;
 
   passwordForm : Password ={
     _id:'',
@@ -20,24 +28,36 @@ export class SiteListComponent{
     siteImgURL : ''
   }
 
-  constructor(public _passwordService:PasswordService,private route:ActivatedRoute){
+  constructor(
+    public _passwordService:PasswordService,
+    private route:ActivatedRoute,
+    private ngxService:NgxUiLoaderService,
+    private router:Router){
     this.loadSite()
   }
 
   loadSite(){
+    this.ngxService.start()
     this._passwordService.getAllPassword().subscribe(res=>
       {
         this.password=res
         console.log(res)
       }
     )
+    this.ngxService.stop();
   }
-  onSubmit(data:any){
-    this._passwordService.addPassWord(data).subscribe(res=>
-      {
-        this.loadSite()
-      }
-    )
+  onSubmit(data:Password){
+    this.show=!this.show;
+    if(!this.isEditMode){
+      this._passwordService.addPassWord(data).subscribe(res=>
+        {
+          this.loadSite()
+        }
+      )
+    }else{
+      this._passwordService.updatePassWord(this.passwordId,data).subscribe(()=> this.loadSite())
+    }
+    this.data?.resetForm();
   }
 
   onDeletePassword(id:string){
@@ -48,10 +68,15 @@ export class SiteListComponent{
      })
   }
 
-  onEditData(password:Password[]){ 
+  onEditData(password:Password){ 
+    this.isEditMode=true
      if(password){
-    
-      
+       this.passwordForm=password
+       this.passwordId=this.passwordForm._id;
      }
+  }
+ 
+  onAddNewPassword(id:string){
+     this.router.navigate([`/password-list/${id}`]);
   }
 }

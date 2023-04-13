@@ -8,26 +8,26 @@
     <!-- Add New site form -->
 
     <div class="px-20 py-10 mb-10 my-5 border-4 border-gray-900">
-        <h2 class="text-3xl text-center">Add New Site</h2>
+        <h2 class="text-3xl text-center">{{isEditMode ? "Edit Site" : "Add New Site"}}</h2>
         <p class="text-center">You can add new site from below</p>
         <form #data="ngForm" (ngSubmit)="onSubmit(data.value)">
             <div class="flex flex-col">
                 <label class="text-lg font-medium mb-2">Site name</label>
-                <input type="text" ngModel name="siteName" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+                <input type="text" [(ngModel)]="passwordForm.siteName" name="siteName" class="border-2 border-gray-900 p-2 rounded-lg w-full">
             </div>
 
             <div class="flex flex-col">
                 <label class="text-lg font-medium mb-2">Site URL</label>
-                <input type="text" ngModel name="siteURL" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+                <input type="text" [(ngModel)]="passwordForm.siteURL" name="siteURL" class="border-2 border-gray-900 p-2 rounded-lg w-full">
             </div>
 
             <div class="flex flex-col">
                 <label class="text-lg font-medium mb-2">Site Image Url</label>
-                <input type="text" ngModel name="siteImgURL" class="border-2 border-gray-900 p-2 rounded-lg w-full">
+                <input type="text" [(ngModel)]="passwordForm.siteImgURL" name="siteImgURL" class="border-2 border-gray-900 p-2 rounded-lg w-full">
             </div>
 
-            <button type="submit" class="mt-10 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-md">
-                Add New Site
+            <button  type="submit" class="mt-10 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-md">
+                {{isEditMode ? "Edit" : "Add New Site"}}
             </button>
 
             <button type="reset" class="mt-10 mx-0.5 px-5 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md">
@@ -37,8 +37,8 @@
 
 
     </div>
-
-    <div class="grid grid-cols-4 gap-5" *ngFor="let psw of password">
+    <div class="grid grid-cols-4 gap-5" >
+        <ng-container *ngFor="let psw of password"> 
 
         <div class="shadow-lg border-2 border-gray-900">
             <img src="{{psw.siteImgURL}}" alt="">
@@ -47,18 +47,19 @@
                 {{psw.siteURL}}
             </div>
 
-            <button class=" my-3 my-3 text-white bg-gray-900 rounded-lg text-sm px-5 py-3">
+            <button class=" my-3 my-3 text-white bg-gray-900 rounded-lg text-sm px-5 py-3" (click)="onAddNewPassword(psw._id)">
                 Add New Password
             </button>
 
-            <button class="my-3 mx-0.5  px-5 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md">
+            <button class="my-3 mx-0.5  px-3 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md" (click)="onEditData(psw)">
                 Edit
              </button>
 
-            <button class="my-3 mx-0.5  px-5 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md" (click)="onDeletePassword(psw._id)">
+            <button class="my-3 mx-0.5  px-3 py-3 text-sm border-2 text-gray-900 border-gray-900 text-black shadow rounded-md" (click)="onDeletePassword(psw._id)">
                Delete
              </button>
         </div>
 
+    </ng-container>
     </div>
 </div>

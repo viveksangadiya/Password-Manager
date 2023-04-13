@@ -9,7 +9,9 @@ import { PasswordListComponent } from './components/password-list/password-list.
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http'
-import {CommonModule} from '@angular/common'
+import {CommonModule} from '@angular/common';
+import { NgxUiLoaderModule,NgxUiLoaderHttpModule  } from "ngx-ui-loader";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,9 @@ import {CommonModule} from '@angular/common'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
