@@ -68,7 +68,7 @@ export class SiteListComponent{
      })
   }
 
-  onEditData(password:Password){ 
+  onEditPassword(password:Password){ 
     this.isEditMode=true
      if(password){
        this.passwordForm=password
